@@ -4,13 +4,14 @@ let autoIdTeller = 1;
 const autoForm = document.getElementById('autoForm');
 const boodschapFormulier = document.getElementById('boodschap');
 const autoLijstElement = document.getElementById('autoLijst');
+const zoekBalk = document.getElementById('zoekBalk');
 
-function updateLijstOnScreen() {
+function updateLijstOnScreen(autosOmTeTonen = null) {
     autoLijstElement.innerHTML = "";
-    const alleAutos = systeem.alleAutosWeergeven();
+
+    const alleAutos = autosOmTeTonen || systeem.alleAutosWeergeven();
 
     alleAutos.forEach(auto => {
-
         const card = document.createElement('div');
         card.className = 'auto-card';
 
@@ -39,9 +40,7 @@ function updateLijstOnScreen() {
             knop.className = "btn-huren";
             knop.addEventListener('click', () => {
                 const succes = systeem.autoHuren(auto.id);
-                if (succes) {
-                    updateLijstOnScreen();
-                }
+                if (succes) voerZoekingUit();
             });
         } else {
 
@@ -50,9 +49,8 @@ function updateLijstOnScreen() {
             knop.addEventListener('click', () => {
 
                 const succes = systeem.autoTerugbrengen(auto.id);
-                if (succes) {
-                    updateLijstOnScreen();
-                }
+                if (succes) voerZoekingUit();
+                
             });
         }
 
@@ -60,6 +58,14 @@ function updateLijstOnScreen() {
         autoLijstElement.appendChild(card);
     });
 }
+
+function voerZoekingUit() {
+    const zoekTerm = zoekBalk.value;
+    const gefilterdeAutos = systeem.zoeken(zoekTerm);
+    updateLijstOnScreen(gefilterdeAutos);
+}
+
+zoekBalk.addEventListener('input', voerZoekingUit);
 
 autoForm.addEventListener('submit', function(event) {
     event.preventDefault();
@@ -70,6 +76,7 @@ autoForm.addEventListener('submit', function(event) {
     const nieuweAuto = new Car(autoIdTeller, merkWaarde, modelWaarde, "Sedan", 0);
     systeem.autoToevoegen(nieuweAuto);
 
+    zoekBalk.value = "";
     updateLijstOnScreen();
 
     boodschapFormulier.style.color = "#10b981";
