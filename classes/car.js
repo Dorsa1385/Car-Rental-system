@@ -1,22 +1,10 @@
 class Car {
-    constructor(id, brand, model, pricePerDay) {
+    constructor(id, merk, model, type, huurprijs) {
         this.id = id;
-        this.brand = brand;
+        this.merk = merk;
         this.model = model;
-        this.pricePerDay = pricePerDay;
-        this.isAvailable = true;
-    }
-
-    rentCar() {
-        if (this.isAvailable) {
-            this.isAvailable = false;
-            return "Car rented successfully";
-        }
-        return "Car is not available";
-    }
-
-    returnCar() {
-        this.isAvailable = true;
-        return "Car returned successfully";
+        this.type = type;
+        this.huurprijs = huurprijs;
+        this.isVerhuurd = false;
     }
 }

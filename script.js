@@ -1,26 +1,81 @@
-console.log("Script werkt");
+const systeem = new RentalSystem();
+let autoIdTeller = 1;
 
-// auto’s maken
-let car1 = new Car(1, "Toyota", "Yaris", 50);
-let car2 = new Car(2, "BMW", "X5", 120);
+const autoForm = document.getElementById('autoForm');
+const boodschapFormulier = document.getElementById('boodschap');
+const autoLijstElement = document.getElementById('autoLijst');
 
-// klant maken
-let customer1 = new Customer(1, "Dorsa");
+function updateLijstOnScreen() {
+    autoLijstElement.innerHTML = "";
+    const alleAutos = systeem.alleAutosWeergeven();
 
-// systeem maken
-let system = new RentalSystem();
+    alleAutos.forEach(auto => {
 
-system.addCar(car1);
-system.addCar(car2);
+        const card = document.createElement('div');
+        card.className = 'auto-card';
 
-// testen huren
-customer1.rent(car1);
+        const statusKlasse = auto.isVerhuurd ? 'verhuurd' : 'beschikbaar';
+        const statusTekst = auto.isVerhuurd ? 'verhuurd' : 'Beschikbaar';
 
-console.log(system.getAvailableCars());
+        card.innerHTML = `
+            <button class="btn-verwijderen" title="Auto verwijderen">✖</button>
+            <h3>${auto.merk} ${auto.model}</h3>
+            <span class="status-badge ${statusKlasse}">${statusTekst}</span>
+            <div class="card-actions"></div>
+        `;
+        
+        const verwijderKnop = card.querySelector('.btn-verwijderen');
+        verwijderKnop.addEventListener('click', () => {
+            systeem.autoVerwijderen(auto.id);
+            updateLijstOnScreen();
+        });
 
-// tonen op pagina
-document.body.innerHTML += `
-    <h2>Car Rental System</h2>
-    <p>${car1.brand} ${car1.model} - €${car1.pricePerDay}</p>
-    <p>${car2.brand} ${car2.model} - €${car2.pricePerDay}</p>
-`;
+        const actionsDiv = card.querySelector('.card-actions');
+        const knop = document.createElement('button');
+
+        if (!auto.isVerhuurd) {
+
+            knop.innerText = "Auto Huren";
+            knop.className = "btn-huren";
+            knop.addEventListener('click', () => {
+                const succes = systeem.autoHuren(auto.id);
+                if (succes) {
+                    updateLijstOnScreen();
+                }
+            });
+        } else {
+
+            knop.innerText = "Terugbrengen";
+            knop.className = "btn-terug";
+            knop.addEventListener('click', () => {
+
+                const succes = systeem.autoTerugbrengen(auto.id);
+                if (succes) {
+                    updateLijstOnScreen();
+                }
+            });
+        }
+
+        actionsDiv.appendChild(knop);
+        autoLijstElement.appendChild(card);
+    });
+}
+
+autoForm.addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    const merkWaarde = document.getElementById('merk').value;
+    const modelWaarde = document.getElementById('model').value;
+
+    const nieuweAuto = new Car(autoIdTeller, merkWaarde, modelWaarde, "Sedan", 0);
+    systeem.autoToevoegen(nieuweAuto);
+
+    updateLijstOnScreen();
+
+    boodschapFormulier.style.color = "#10b981";
+    boodschapFormulier.innerText = 'Succes! De auto is toegevoegd!';
+
+    autoForm.reset();
+    autoIdTeller++;
+
+});

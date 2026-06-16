@@ -1,8 +1,188 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
 body {
-    font-family: Arial;
-    margin: 20px;
+    background-color: #121824;
+    color: #f3f4f6;
+    padding: 40px;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
 h1 {
-    color: blue;
+    font-size: 2.5rem;
+    margin-bottom: 30px;
+    color: #3b82f6;
+    border-bottom: 2px solid #1e293b;
+    padding-bottom: 15px;
+}
+
+h2 {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    color: #94a3b8;
+}
+
+form {
+    background-color: #1e293b;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+    max-width: 500px;
+    margin-bottom: 40px;
+}
+
+.input-group {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #cbd5e1;
+}
+
+input[type="text"] {
+    width: 100%;
+    padding: 12px;
+    background-color: #0f172a;
+    border: 1px solid #334155;
+    border-radius: 8px;
+    color: #fff;
+    font-size: 1rem;
+    transition: border-color 0.2s;
+}
+
+input[type="text"]:focus {
+    outline: none;
+    border-color: #3b82f6;
+}
+
+button {
+    width: 100%;
+    padding: 12px;
+    background-color: #3b82f6;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+button:hover {
+    background-color: #2563eb;
+}
+
+#boodschap {
+    margin-top: 15px;
+    font-size: 0.95rem;
+}
+
+hr {
+    border: 0;
+    height: 1px;
+    background: #334155;
+    margin: 40px 0;
+}
+
+#autoLijst {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    list-style-type: none;
+}
+
+.auto-card {
+    background-color: #1e293b;
+    border-radius: 12px;
+    padding: 20px;
+    width: calc(33.333% - 14px);
+    min-width: 280px;
+    border: 1px solid #334155;
+    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+}
+
+.auto-card h3 {
+    font-size: 1.3rem;
+    margin-bottom: 12px;
+    color: #fff;
+    padding-right: 30px;
+}
+
+.status-badge {
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: bold;
+    margin-bottom: 18px;
+}
+
+.status-badge.beschikbaar {
+    background-color: rgba(16, 185, 129, 0.2);
+    color: #10b981;
+}
+
+.status-badge.verhuurd {
+    background-color: rgba(239, 68, 68, 0.2);
+    color: #ef4444;
+}
+
+.card-actions {
+    margin-top: 5px;
+}
+
+.card-actions button {
+    width: 100%;
+    padding: 10px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.btn-huren {
+    background-color: #10b981;
+    color: white;
+}
+
+.btn-huren:hover {
+    background-color: #059669;
+}
+
+.btn-terug {
+    background-color: #f59e0b;
+    color: white;
+}
+
+.btn-terug:hover {
+    background-color: #d97706;
+}
+
+.btn-verwijderen {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: none;
+    border: none;
+    color: #94a3b8;
+    font-size: 1.2rem;
+    cursor: pointer;
+    width: auto;
+    padding: 0;
+    transition: color 0.2s;
+}
+
+.btn-verwijderen:hover {
+    background: none;
+    color: #ef4444;
 }

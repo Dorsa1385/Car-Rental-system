@@ -1,14 +1,31 @@
 class RentalSystem {
     constructor() {
-        this.cars = [];
-        this.users = [];
+        this.autos = [];
     }
 
-    addCar(car) {
-        this.cars.push(car);
+    autoToevoegen(auto) {
+        this.autos.push(auto);
     }
 
-    getAvailableCars() {
-        return this.cars.filter(car => car.isAvailable);
+    alleAutosWeergeven() {
+        return this.autos;
+    }
+
+    autoHuren(id) {
+        const auto = this.autos.find(a => a.id === id);
+        if (auto && !auto.isVerhuurd) {
+            auto.isVerhuurd = true;
+            return true;
+        }
+        return false;
+    }
+
+    autoTerugbrengen(id) {
+        const auto = this.autos.find(a => a.id === id);
+        if (auto && auto.isVerhuurd) {
+            auto.isVerhuurd = false;
+            return true;
+        }
+        return false;
     }
 }
