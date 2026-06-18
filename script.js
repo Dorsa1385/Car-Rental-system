@@ -28,6 +28,7 @@ function updateLijstOnScreen(autosOmTeTonen = null) {
         card.innerHTML = `
             <button class="btn-verwijderen" title="Auto verwijderen">✖</button>
             <h3>${auto.merk} ${auto.model}</h3>
+            <p>Huurprijs: €${auto.huurprijs} per dag</p>
             <span class="status-badge ${statusKlasse}">${statusTekst}</span>
             <div class="card-actions"></div>
         `;
@@ -93,7 +94,7 @@ autoForm.addEventListener('submit', function(event) {
         merkWaarde,
         modelWaarde,
         "Sedan",
-        0
+        50
     );
 
     systeem.autoToevoegen(nieuweAuto);
