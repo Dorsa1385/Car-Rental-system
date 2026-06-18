@@ -12,13 +12,13 @@
     <h2>Auto Toevoegen</h2>
     <form id="autoForm">
         <div class="input-group">
-            <label for="merk">Merk:</label>
-            <input type="text" id="merk" required placeholder="Bijv. Tesla">
+            <label for="merk">Merk :</label>
+            <input type="text" id="merk" required placeholder="">
         </div>
 
         <div class="input-group">
-            <label for="model">Model:</label>
-            <input type="text" id="model" required placeholder="Bijv. Model 3">
+            <label for="model">Model :</label>
+            <input type="text" id="model" required placeholder="">
         </div>
 
         <button type="submit">Auto Toevoegen</button>
@@ -31,6 +31,16 @@
     <div class="input-group" style="max-width: 500px; margin-bottom: 30px;"></div>
         <input type="text" id="zoekBalk" placeholder="Type een merk of model om live te zoeken...">
     </div>
+
+    <div class="input-group zoek-container">
+     <select id="typeFilter">
+        <option value="Alle">Alle types</option>
+        <option value="Elektrisch">Elektrisch</option>
+        <option value="SUV">SUV</option>
+        <option value="Sedan">Sedan</option>
+     </select>
+   </div>
+
 
     <h2>Beschikbare Voertuigen</h2>
     <div id="autoLijst">

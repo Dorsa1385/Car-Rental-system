@@ -1,7 +1,6 @@
 const systeem = new RentalSystem();
 let autoIdTeller = 1;
 
-// NIEUW - standaard auto's zodat gebruiker direct auto's kan bekijken
 systeem.autoToevoegen(new Car(1, "Tesla", "Model 3", "Elektrisch", 80));
 systeem.autoToevoegen(new Car(2, "BMW", "X5", "SUV", 120));
 systeem.autoToevoegen(new Car(3, "Audi", "A4", "Sedan", 90));
@@ -12,11 +11,17 @@ const autoForm = document.getElementById('autoForm');
 const boodschapFormulier = document.getElementById('boodschap');
 const autoLijstElement = document.getElementById('autoLijst');
 const zoekBalk = document.getElementById('zoekBalk');
+const typeFilter = document.getElementById('typeFilter');
 
 function updateLijstOnScreen(autosOmTeTonen = null) {
     autoLijstElement.innerHTML = "";
 
     const alleAutos = autosOmTeTonen || systeem.alleAutosWeergeven();
+
+    if (alleAutos.length === 0) {
+    autoLijstElement.innerHTML = "<p>Geen resultaten</p>";
+    return;
+}
 
     alleAutos.forEach(auto => {
         const card = document.createElement('div');
@@ -76,12 +81,25 @@ function updateLijstOnScreen(autosOmTeTonen = null) {
 }
 
 function voerZoekingUit() {
-    const zoekTerm = zoekBalk.value;
-    const gefilterdeAutos = systeem.zoeken(zoekTerm);
-    updateLijstOnScreen(gefilterdeAutos);
+    const zoekTerm = zoekBalk.value.toLowerCase();
+    const gekozenType = typeFilter.value;
+
+    let autos = systeem.alleAutosWeergeven();
+
+    autos = autos.filter(auto =>
+        auto.merk.toLowerCase().includes(zoekTerm) ||
+        auto.model.toLowerCase().includes(zoekTerm)
+    );
+
+    if (gekozenType !== "Alle") {
+        autos = autos.filter(auto => auto.type === gekozenType);
+    }
+
+    updateLijstOnScreen(autos);
 }
 
 zoekBalk.addEventListener('input', voerZoekingUit);
+typeFilter.addEventListener('change', voerZoekingUit);
 
 autoForm.addEventListener('submit', function(event) {
     event.preventDefault();
@@ -109,5 +127,4 @@ autoForm.addEventListener('submit', function(event) {
     autoIdTeller++;
 });
 
-// NIEUW - toont auto's direct wanneer de pagina opent
 updateLijstOnScreen();
