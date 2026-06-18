@@ -19,12 +19,14 @@ h1 {
     color: #3b82f6;
     border-bottom: 2px solid #1e293b;
     padding-bottom: 15px;
+    text-align: center;
 }
 
 h2 {
     font-size: 1.5rem;
     margin-bottom: 20px;
     color: #94a3b8;
+    text-align: center;
 }
 
 form {
@@ -33,7 +35,7 @@ form {
     border-radius: 12px;
     box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
     max-width: 500px;
-    margin-bottom: 40px;
+    margin: 0 auto 40px auto;
 }
 
 .input-group {
@@ -58,9 +60,14 @@ input[type="text"] {
     transition: border-color 0.2s;
 }
 
-input[type="text"]:focus {
+input[type="text"] {
+    margin-bottom: 25px;
     outline: none;
     border-color: #3b82f6;
+}
+
+#zoekBalk {
+    text-align: center;
 }
 
 button {
@@ -96,10 +103,12 @@ hr {
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
+    justify-content: center;
     list-style-type: none;
 }
 
 .auto-card {
+    position: relative;
     background-color: #1e293b;
     border-radius: 12px;
     padding: 20px;

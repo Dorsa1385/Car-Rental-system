@@ -1,6 +1,13 @@
 const systeem = new RentalSystem();
 let autoIdTeller = 1;
 
+// NIEUW - standaard auto's zodat gebruiker direct auto's kan bekijken
+systeem.autoToevoegen(new Car(1, "Tesla", "Model 3", "Elektrisch", 80));
+systeem.autoToevoegen(new Car(2, "BMW", "X5", "SUV", 120));
+systeem.autoToevoegen(new Car(3, "Audi", "A4", "Sedan", 90));
+
+autoIdTeller = 4;
+
 const autoForm = document.getElementById('autoForm');
 const boodschapFormulier = document.getElementById('boodschap');
 const autoLijstElement = document.getElementById('autoLijst');
@@ -16,7 +23,7 @@ function updateLijstOnScreen(autosOmTeTonen = null) {
         card.className = 'auto-card';
 
         const statusKlasse = auto.isVerhuurd ? 'verhuurd' : 'beschikbaar';
-        const statusTekst = auto.isVerhuurd ? 'verhuurd' : 'Beschikbaar';
+        const statusTekst = auto.isVerhuurd ? 'Verhuurd' : 'Beschikbaar';
 
         card.innerHTML = `
             <button class="btn-verwijderen" title="Auto verwijderen">✖</button>
@@ -24,8 +31,9 @@ function updateLijstOnScreen(autosOmTeTonen = null) {
             <span class="status-badge ${statusKlasse}">${statusTekst}</span>
             <div class="card-actions"></div>
         `;
-        
+
         const verwijderKnop = card.querySelector('.btn-verwijderen');
+
         verwijderKnop.addEventListener('click', () => {
             systeem.autoVerwijderen(auto.id);
             updateLijstOnScreen();
@@ -38,19 +46,26 @@ function updateLijstOnScreen(autosOmTeTonen = null) {
 
             knop.innerText = "Auto Huren";
             knop.className = "btn-huren";
+
             knop.addEventListener('click', () => {
                 const succes = systeem.autoHuren(auto.id);
-                if (succes) voerZoekingUit();
+
+                if (succes) {
+                    voerZoekingUit();
+                }
             });
+
         } else {
 
             knop.innerText = "Terugbrengen";
             knop.className = "btn-terug";
-            knop.addEventListener('click', () => {
 
+            knop.addEventListener('click', () => {
                 const succes = systeem.autoTerugbrengen(auto.id);
-                if (succes) voerZoekingUit();
-                
+
+                if (succes) {
+                    voerZoekingUit();
+                }
             });
         }
 
@@ -73,16 +88,25 @@ autoForm.addEventListener('submit', function(event) {
     const merkWaarde = document.getElementById('merk').value;
     const modelWaarde = document.getElementById('model').value;
 
-    const nieuweAuto = new Car(autoIdTeller, merkWaarde, modelWaarde, "Sedan", 0);
+    const nieuweAuto = new Car(
+        autoIdTeller,
+        merkWaarde,
+        modelWaarde,
+        "Sedan",
+        0
+    );
+
     systeem.autoToevoegen(nieuweAuto);
 
     zoekBalk.value = "";
     updateLijstOnScreen();
 
     boodschapFormulier.style.color = "#10b981";
-    boodschapFormulier.innerText = 'Succes! De auto is toegevoegd!';
+    boodschapFormulier.innerText = "Succes! De auto is toegevoegd!";
 
     autoForm.reset();
     autoIdTeller++;
-
 });
+
+// NIEUW - toont auto's direct wanneer de pagina opent
+updateLijstOnScreen();
